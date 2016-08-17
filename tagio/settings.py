@@ -17,6 +17,8 @@ class Config(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECURITY_PASSWORD_HASH = 'bcrypt'
     SECURITY_PASSWORD_SALT = 'changeme'
+    SECURITY_TRACKABLE = True
+    SECURITY_TOKEN_AUTHENTICATION_KEY = 'token'
 
 
 class ProdConfig(Config):

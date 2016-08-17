@@ -50,6 +50,12 @@ class User(UserMixin, SurrogatePK, Model):
     last_name = Column(db.String(30), nullable=True)
     active = Column(db.Boolean(), default=False)
     is_admin = Column(db.Boolean(), default=False)
+    last_login_at = Column(db.DateTime)
+    current_login_at = Column(db.DateTime)
+    last_login_ip = Column(db.String(50))
+    current_login_ip = Column(db.String(50))
+    login_count = Column(db.Integer)
+
     roles = db.relationship('Role', secondary=roles_users,
                             backref=db.backref('users', lazy='dynamic'))
 
