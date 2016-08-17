@@ -3,7 +3,7 @@
 from flask import Flask, render_template
 from flask_security import SQLAlchemyUserDatastore
 
-from tagio import models, views
+from tagio import views
 from tagio.assets import assets
 from tagio.extensions import bcrypt, cache, csrf_protect, db, debug_toolbar, login_manager, migrate, security
 from tagio.settings import ProdConfig
@@ -44,6 +44,7 @@ def register_blueprints(app):
     """Register Flask blueprints."""
     app.register_blueprint(views.public.blueprint)
     app.register_blueprint(views.user.blueprint)
+    app.register_blueprint(views.api.blueprint)
     return None
 
 

@@ -5,10 +5,6 @@ See: http://webtest.readthedocs.org/
 """
 from flask import url_for
 
-from tagio.models.user import User
-
-from .factories import UserFactory
-
 
 class TestLoggingIn:
     """Login."""

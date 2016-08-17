@@ -1,24 +1,34 @@
+"""Form modules.
+
+Define forms
+"""
+
 from flask_wtf import Form
 from wtforms import PasswordField, TextField, HiddenField, BooleanField, SubmitField
 from wtforms.validators import DataRequired
-from flask_security import LoginForm  # noqa
 
 from tagio.models.user import User
 
 
 class LoginForm(Form):
+    """Login.
+
+    login
+    """
+
     next = HiddenField()
     username = TextField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember me', default=False)
     submit = SubmitField('Submit')
 
-
     def __init__(self, *args, **kwargs):
+        """constructor."""
         super(LoginForm, self).__init__(*args, **kwargs)
         self.user = None
 
     def validate(self):
+        """validate user input."""
         initial_validation = super(LoginForm, self).validate()
         if not initial_validation:
             return False

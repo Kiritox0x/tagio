@@ -1,3 +1,8 @@
+"""User module.
+
+define object user and role.
+"""
+
 import datetime as dt
 
 from flask_security import RoleMixin, UserMixin
@@ -7,15 +12,13 @@ from tagio.database import (
     Column,
     db,
     Model,
-    ReferenceCol,
-    relationship,
     SurrogatePK,
 )
 
 
 roles_users = db.Table('roles_users',
-        db.Column('user_id', db.Integer(), db.ForeignKey('users.id')),
-        db.Column('role_id', db.Integer(), db.ForeignKey('roles.id')))
+                       Column('user_id', db.Integer(), db.ForeignKey('users.id')),
+                       Column('role_id', db.Integer(), db.ForeignKey('roles.id')))
 
 
 class Role(RoleMixin, SurrogatePK, Model):

@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 """Public section, including homepage and signup."""
-from flask import Blueprint, flash, redirect, render_template, request, url_for
-from flask_login import login_required, login_user, logout_user
+from flask import Blueprint, render_template
 
-from tagio.extensions import login_manager
 from tagio.models.user import User
-from tagio.utils import flash_errors
+from tagio.extensions import login_manager
 
 blueprint = Blueprint('public', __name__, static_folder='../static')
 
@@ -25,5 +23,4 @@ def home():
 @blueprint.route('/about/')
 def about():
     """About page."""
-    form = LoginForm(request.form)
     return render_template('public/about.html')
