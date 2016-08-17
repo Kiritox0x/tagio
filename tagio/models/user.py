@@ -1,24 +1,33 @@
-# -*- coding: utf-8 -*-
-"""User models."""
 import datetime as dt
 
-from flask_login import UserMixin
+from flask_security import RoleMixin, UserMixin
 
-from tagio.database import Column, Model, SurrogatePK, db, reference_col, relationship
 from tagio.extensions import bcrypt
+from tagio.database import (
+    Column,
+    db,
+    Model,
+    ReferenceCol,
+    relationship,
+    SurrogatePK,
+)
 
 
-class Role(SurrogatePK, Model):
+roles_users = db.Table('roles_users',
+        db.Column('user_id', db.Integer(), db.ForeignKey('users.id')),
+        db.Column('role_id', db.Integer(), db.ForeignKey('roles.id')))
+
+
+class Role(RoleMixin, SurrogatePK, Model):
     """A role for a user."""
 
     __tablename__ = 'roles'
     name = Column(db.String(80), unique=True, nullable=False)
-    user_id = reference_col('users', nullable=True)
-    user = relationship('User', backref='roles')
+    description = Column(db.String(255))
 
-    def __init__(self, name, **kwargs):
+    def __init__(self, name, description='', **kwargs):
         """Create instance."""
-        db.Model.__init__(self, name=name, **kwargs)
+        db.Model.__init__(self, name=name, description=description, **kwargs)
 
     def __repr__(self):
         """Represent instance as a unique string."""
@@ -38,6 +47,8 @@ class User(UserMixin, SurrogatePK, Model):
     last_name = Column(db.String(30), nullable=True)
     active = Column(db.Boolean(), default=False)
     is_admin = Column(db.Boolean(), default=False)
+    roles = db.relationship('Role', secondary=roles_users,
+                            backref=db.backref('users', lazy='dynamic'))
 
     def __init__(self, username, email, password=None, **kwargs):
         """Create instance."""

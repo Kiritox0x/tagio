@@ -12,7 +12,7 @@ from flask_script.commands import Clean, ShowUrls
 from tagio.app import create_app
 from tagio.database import db
 from tagio.settings import DevConfig, ProdConfig
-from tagio.user.models import User
+from tagio.models.user import User
 
 CONFIG = ProdConfig if os.environ.get('TAGIO_ENV') == 'prod' else DevConfig
 HERE = os.path.abspath(os.path.dirname(__file__))

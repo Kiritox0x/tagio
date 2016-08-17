@@ -1,36 +1,35 @@
-# -*- coding: utf-8 -*-
-"""Public forms."""
 from flask_wtf import Form
-from wtforms import PasswordField, StringField
+from wtforms import PasswordField, TextField, HiddenField, BooleanField, SubmitField
 from wtforms.validators import DataRequired
+from flask_security import LoginForm  # noqa
 
-from tagio.user.models import User
+from tagio.models.user import User
 
 
 class LoginForm(Form):
-    """Login form."""
-
-    username = StringField('Username', validators=[DataRequired()])
+    next = HiddenField()
+    username = TextField('Username', validators=[DataRequired()])
     password = PasswordField('Password', validators=[DataRequired()])
+    remember = BooleanField('Remember me', default=False)
+    submit = SubmitField('Submit')
+
 
     def __init__(self, *args, **kwargs):
-        """Create instance."""
         super(LoginForm, self).__init__(*args, **kwargs)
         self.user = None
 
     def validate(self):
-        """Validate the form."""
         initial_validation = super(LoginForm, self).validate()
         if not initial_validation:
             return False
 
         self.user = User.query.filter_by(username=self.username.data).first()
         if not self.user:
-            self.username.errors.append('Unknown username')
+            self.username.errors.append('Invalid username or password!')
             return False
 
         if not self.user.check_password(self.password.data):
-            self.password.errors.append('Invalid password')
+            self.username.errors.append('Invalid username or password!')
             return False
 
         if not self.user.active:

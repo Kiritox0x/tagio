@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 """The app module, containing the app factory function."""
 from flask import Flask, render_template
+from flask_security import SQLAlchemyUserDatastore
 
-from tagio import public, user
+from tagio import models, views
 from tagio.assets import assets
-from tagio.extensions import bcrypt, cache, csrf_protect, db, debug_toolbar, login_manager, migrate
+from tagio.extensions import bcrypt, cache, csrf_protect, db, debug_toolbar, login_manager, migrate, security
 from tagio.settings import ProdConfig
 
 
@@ -31,13 +32,18 @@ def register_extensions(app):
     login_manager.init_app(app)
     debug_toolbar.init_app(app)
     migrate.init_app(app, db)
+
+    from tagio.models.user import User, Role
+    from tagio.forms import LoginForm
+    security.init_app(app, SQLAlchemyUserDatastore(db, User, Role), login_form=LoginForm)
+
     return None
 
 
 def register_blueprints(app):
     """Register Flask blueprints."""
-    app.register_blueprint(public.views.blueprint)
-    app.register_blueprint(user.views.blueprint)
+    app.register_blueprint(views.public.blueprint)
+    app.register_blueprint(views.user.blueprint)
     return None
 
 
