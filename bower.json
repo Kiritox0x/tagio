@@ -1,0 +1,10 @@
+{
+  "name": "tagio",
+  "dependencies": {
+    "bootstrap": "~3.2.0",
+    "jQuery": "~2.1.3"
+  },
+  "resolutions": {
+    "jQuery": "^3.1.0"
+  }
+}
