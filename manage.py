@@ -48,7 +48,7 @@ class Lint(Command):
 
     def run(self, fix_imports):
         """Run command."""
-        skip = ['requirements']
+        skip = ['requirements', 'migrations']
         root_files = glob('*.py')
         root_directories = [name for name in next(os.walk('.'))[1] if not name.startswith('.')]
         files_and_directories = [arg for arg in root_files + root_directories if arg not in skip]
@@ -61,8 +61,6 @@ class Lint(Command):
             if rv is not 0:
                 exit(rv)
 
-        if fix_imports:
-            execute_tool('Fixing import order', 'isort', '-rc')
         execute_tool('Checking code style', 'flake8')
 
 
