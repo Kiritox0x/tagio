@@ -4,7 +4,7 @@ import datetime as dt
 
 import pytest
 
-from tagio.user.models import Role, User
+from tagio.models.user import Role, User
 
 from .factories import UserFactory
 

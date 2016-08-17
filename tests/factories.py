@@ -4,7 +4,7 @@ from factory import PostGenerationMethodCall, Sequence
 from factory.alchemy import SQLAlchemyModelFactory
 
 from tagio.database import db
-from tagio.user.models import User
+from tagio.models.user import User
 
 
 class BaseFactory(SQLAlchemyModelFactory):
