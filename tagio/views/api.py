@@ -53,8 +53,8 @@ def users(version):
 
     list all users.
     """
-    if version == "1":
+    if version == '1':
         users = User.query.all()
-        return jsonify({'code': 0, 'msg': {user.id : {'name': user.username} for user in users}})
+        return jsonify({'code': 0, 'msg': {user.id: {'name': user.username} for user in users}})
 
     return jsonify({'code': 1, 'msg': 'Invalid version'})
