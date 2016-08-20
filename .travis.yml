@@ -1,13 +1,14 @@
-# Config file for automatic testing at travis-ci.org
-sudo: false  # http://docs.travis-ci.com/user/migrating-from-legacy/
+sudo: false
 language: python
 python:
-  - 3.4
-  - 3.5
+- 3.4
+- 3.5
 install: pip install -r requirements/dev.txt
-before_script: 
-  - npm install -g bower
-  - bower install -f
-  - python manage.py lint
+before_script:
+- npm install -g bower
+- bower install -f
+- python manage.py lint
 script: python manage.py test
-
+notifications:
+  slack:
+    secure: 66+ZA/DofHZ/TiWSwds9XRT2QtuQ5hGNhrEqsTbjATb7L6aJwd1yOjTyFYtQxRfI0Qe1X7PMq30B0H43tYMN71seuuMcFnt35oI3TkDmm1oMTlvzA0d/8JvnOdpzmJCplUyMogGhPWnP7nAlq3+BFm83ti5Il0rLTI+s4BmCAkWApp/pCzOqt2Q0kU81ZxHWFTz0Z1tYrHq2PaswpKL4+2BASMyppmLIU1xUTi2nZSFZYyVRo8N1Pti/mC6wRduZaHEVSUVhxBS/qnZTRl6AhX1DsJ10jwap5s88r2I/rp9Vl+PG1vSzfRLRlTym+aAtdTz46fzhSD0h801b7VOzS9uq0FOxCUW7xOBENhd6dJFjRehjslniSS+kEi0fk969i8faMaGJ5V2RkJlrwTtyiUWMN0QZQei0i59DkOp8nvlyg3dEy+d6QuUTLer47WG5Rlgbjo6PtfzYHaz7eyedMm0ckpIAvUwVcuSk6MIRevUjiEGaXvLcduxESIHwr8gTbYLkQkMrRKFzdP+yN5HpyCX3mbHhIgcYsriGrPbS3LgDonDbJZI9zQjwZUcGyuU4udD6NOIredMNgsg64xIun8lvHiSNriNcQypbjCAIbG7BWL8sfjK30zgIlgxkJbavT1qzWrPsg2oAv+OvorjyTS7lqicqwFsacsZ1mDjE6tA=
